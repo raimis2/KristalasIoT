@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">KristalasIoT</string>
+    <string name="hint_text">Enter delay</string>
+    <string name="delay_btn">Set</string>
+    <string name="lamp">Turn On/Off BCM6</string>
+    <string name="bcm3_on">BCM3 is On</string>
+    <string name="bcm3_off">BCM3 is Off</string>
+    <string name="bcm6_on">BCM6 is On</string>
+    <string name="bcm6_off">BCM6 is Off</string>
+    <string name="overview">Overview</string>
+    <string name="delay_label">Delay:</string>
+    <string name="BCM3_label">BCM3:</string>
+    <string name="BCM6_label">BCM6:</string>
+    <string name="on">On:</string>
+    <string name="off">Off:</string>
+</resources>
