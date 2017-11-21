@@ -1,6 +1,8 @@
 package com.example.kristalas.kristalasiot;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.google.android.things.pio.Gpio;
@@ -49,9 +52,23 @@ public class MainActivity extends AppCompatActivity {
     private void updateUI(DataSnapshot ds) {
         boolean state;
         final EditText ed;// = findViewById(R.id.editText);
+        TextView tv;  //= findViewById(R.id.textView);
         Switch sw; // sw = findViewById(R.id.switch1);
 
         switch (ds.getKey()) {
+            case "online":
+                tv = findViewById(R.id.textView);
+                if (Integer.parseInt(ds.getValue().toString()) == 0) {
+                    tv.setText(getString(R.string.rpi_offline).toString());
+                    tv.setTextColor(Color.RED);
+                } else if (Integer.parseInt(ds.getValue().toString()) == 1) {
+                    tv.setText(getString(R.string.rpi_online).toString());
+                    tv.setTextColor(Color.GREEN);
+                } else {
+                    tv.setText("Failed!!!");
+                    tv.setTextColor(Color.RED);
+                }
+                break;
             case "delay":
                 ed = findViewById(R.id.editText);
                 ed.setHint(getString(R.string.delay_label).toString() + ds.getValue().toString());
@@ -88,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void handleUI() {
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
 
         mDatabase.addChildEventListener(new ChildEventListener() {
             @Override

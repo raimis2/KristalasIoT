@@ -13,4 +13,6 @@
     <string name="BCM6_label">BCM6:</string>
     <string name="on">On:</string>
     <string name="off">Off:</string>
+    <string name="rpi_online">Raspberry Pi is Online:</string>
+    <string name="rpi_offline">Raspberry Pi is Offline:</string>
 </resources>
