@@ -33,7 +33,6 @@ public class OverviewActivity extends AppCompatActivity {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    // Log.d("TAG", ds.getKey() + " " + ds.getValue());
                     updateUI(ds);
                 }
             }
@@ -58,29 +57,12 @@ public class OverviewActivity extends AppCompatActivity {
             case "delay":
                 textView = findViewById(R.id.textView3);
                 textView.setText(ds.getValue().toString());
-             //   Log.d("TAG", ds.getKey() + " " + ds.getValue());
-            case "BCM3":
+            case "BCM4":
                 textView = findViewById(R.id.textView6);
-             /*   if (ds.getValue() == "0") {
-                    value = getString(R.string.off);
-                } else if (ds.getValue() == "1") {
-                    value = getString(R.string.on);
-                } else {
-                    value = "ERR";
-                }*/
                 textView.setText(ds.getValue().toString());
-            //    Log.d("TAG", ds.getKey() + " " + ds.getValue());
             case "BCM6":
                 textView = findViewById(R.id.textView7);
-               /* if (ds.getValue() == "0") {
-                    value = getString(R.string.off);
-                } else if (ds.getValue() == "1") {
-                    value = getString(R.string.on);
-                } else {
-                    value = "ERR";
-                }*/
                 textView.setText(ds.getValue().toString());
-              //  Log.d("TAG", ds.getKey() + " " + ds.getValue());
         }
     }
 }

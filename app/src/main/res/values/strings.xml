@@ -3,16 +3,40 @@
     <string name="hint_text">Enter delay</string>
     <string name="delay_btn">Set</string>
     <string name="lamp">Turn On/Off BCM6</string>
-    <string name="bcm3_on">BCM3 is On</string>
-    <string name="bcm3_off">BCM3 is Off</string>
+    <string name="bcm4_on">BCM4 is On</string>
+    <string name="bcm4_off">BCM4 is Off</string>
     <string name="bcm6_on">BCM6 is On</string>
     <string name="bcm6_off">BCM6 is Off</string>
     <string name="overview">Overview</string>
     <string name="delay_label">Delay:</string>
-    <string name="BCM3_label">BCM3:</string>
+    <string name="BCM4_label">BCM4:</string>
     <string name="BCM6_label">BCM6:</string>
     <string name="on">On:</string>
     <string name="off">Off:</string>
     <string name="rpi_online">Raspberry Pi is Online:</string>
     <string name="rpi_offline">Raspberry Pi is Offline:</string>
+
+    <string name="garden">Garden system</string>
+    <string name="gardentitle">Manual settings</string>
+    <string name="ws1">Water switch 1</string>
+    <string name="ws2">Water switch 2</string>
+    <string name="wp">Water pump</string>
+    <string name="h1">Input from humidity sensor 1:</string>
+    <string name="h2">Input from humidity sensor 2:</string>
+    <string name="h3">Input from humidity sensor 3:</string>
+    <string name="wet">Wet</string>
+    <string name="dry">Dry</string>
+    <string name="auto_on">Auto mode</string>
+    <string name="auto_off">Manual mode</string>
+    <string name="plant1a">Plant 1 has enough Moisture</string>
+    <string name="plant1b">Watering plant 1</string>
+    <string name="plant1c">Need to water the plant 1</string>
+    <string name="plant2a">Plant 2 has enough Moisture</string>
+    <string name="plant2b">Watering plant 2</string>
+    <string name="plant2c">Need to water the plant 3</string>
+    <string name="plant3a">Plant 3 has enough Moisture</string>
+    <string name="plant3b">Watering plant 3</string>
+    <string name="plant31c">Need to water the plant 3</string>
+
+
 </resources>
