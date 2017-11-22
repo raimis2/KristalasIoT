@@ -1,20 +1,23 @@
 <resources>
     <string name="app_name">KristalasIoT</string>
-    <string name="hint_text">Enter delay</string>
     <string name="delay_btn">Set</string>
-    <string name="lamp">Turn On/Off BCM6</string>
     <string name="bcm4_on">BCM4 is On</string>
     <string name="bcm4_off">BCM4 is Off</string>
     <string name="bcm6_on">BCM6 is On</string>
     <string name="bcm6_off">BCM6 is Off</string>
+    <string name="rpi_online">Raspberry Pi is Online:</string>
+    <string name="rpi_offline">Raspberry Pi is Offline:</string>
+
     <string name="overview">Overview</string>
     <string name="delay_label">Delay:</string>
     <string name="BCM4_label">BCM4:</string>
     <string name="BCM6_label">BCM6:</string>
-    <string name="on">On:</string>
-    <string name="off">Off:</string>
-    <string name="rpi_online">Raspberry Pi is Online:</string>
-    <string name="rpi_offline">Raspberry Pi is Offline:</string>
+    <string name="BCM17_label">BCM17:</string>
+    <string name="BCM22_label">BCM22:</string>
+    <string name="BCM23_label">BCM23:</string>
+    <string name="BCM24_label">BCM24:</string>
+    <string name="BCM25_label">BCM25:</string>
+    <string name="BCM27_label">BCM27:</string>
 
     <string name="garden">Garden system</string>
     <string name="gardentitle">Manual settings</string>
@@ -36,7 +39,7 @@
     <string name="plant2c">Need to water the plant 3</string>
     <string name="plant3a">Plant 3 has enough Moisture</string>
     <string name="plant3b">Watering plant 3</string>
-    <string name="plant31c">Need to water the plant 3</string>
+    <string name="plant3c">Need to water the plant 3</string>
 
 
 </resources>

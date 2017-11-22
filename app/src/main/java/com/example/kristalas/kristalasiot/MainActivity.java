@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, OverviewActivity.class);
         startActivity(intent);
     }
+
     public void showGardenSystem(View view) {
         Intent intent = new Intent(this, GardenActivity.class);
         startActivity(intent);
@@ -52,7 +53,15 @@ public class MainActivity extends AppCompatActivity {
         switch (ds.getKey()) {
             case "online":
                 tv = findViewById(R.id.textView);
-                if (Integer.parseInt(ds.getValue().toString()) == 0) {
+                if (getState(ds.getValue())) {
+                    tv.setText(getString(R.string.rpi_online).toString());
+                    tv.setTextColor(Color.GREEN);
+                } else {
+                    tv.setText(getString(R.string.rpi_offline).toString());
+                    tv.setTextColor(Color.RED);
+                }
+
+               /* if (Integer.parseInt(ds.getValue().toString()) == 0) {
                     tv.setText(getString(R.string.rpi_offline).toString());
                     tv.setTextColor(Color.RED);
                 } else if (Integer.parseInt(ds.getValue().toString()) == 1) {
@@ -60,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
                     tv.setTextColor(Color.GREEN);
                 } else {
                     tv.setText("Failed!!!");
-                    tv.setTextColor(Color.RED);
-                }
+                    tv.setTextColor(Color.RED);*/
+
                 break;
             case "delay":
                 ed = findViewById(R.id.editText);
@@ -86,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 sw.setChecked(getState(ds.getValue()));
                 break;
         }
+
     }
 
 

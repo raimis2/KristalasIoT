@@ -57,12 +57,39 @@ public class OverviewActivity extends AppCompatActivity {
             case "delay":
                 textView = findViewById(R.id.textView3);
                 textView.setText(ds.getValue().toString());
+                break;
             case "BCM4":
                 textView = findViewById(R.id.textView6);
                 textView.setText(ds.getValue().toString());
+                break;
             case "BCM6":
                 textView = findViewById(R.id.textView7);
                 textView.setText(ds.getValue().toString());
+                break;
+            case "BCM24":
+                textView = findViewById(R.id.textView15);
+                textView.setText(ds.getValue().toString());
+                break;
+            case "BCM25":
+                textView = findViewById(R.id.textView16);
+                textView.setText(ds.getValue().toString());
+                break;
+            case "BCM23":
+                textView = findViewById(R.id.textView17);
+                textView.setText(ds.getValue().toString());
+                break;
+            case "BCM17":
+                textView = findViewById(R.id.textView18);
+                textView.setText(ds.getValue().toString());
+                break;
+            case "BCM27":
+                textView = findViewById(R.id.textView19);
+                textView.setText(ds.getValue().toString());
+                break;
+            case "BCM22":
+                textView = findViewById(R.id.textView20);
+                textView.setText(ds.getValue().toString());
+                break;
         }
     }
 }
