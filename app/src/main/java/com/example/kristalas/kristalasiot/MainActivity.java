@@ -20,18 +20,43 @@ import com.google.firebase.database.FirebaseDatabase;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private DatabaseReference mDatabase;
+    private DatabaseReference refDelay;
+    ChildEventListener childEventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //   Log.i(TAG, "On Start .....");
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (childEventListener != null) {
+            mDatabase.removeEventListener(childEventListener);
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         handleUI();
     }
 
+
     public void setDelay(View view) {
         EditText editText = findViewById(R.id.editText);
-        int finalValue = Integer.parseInt(editText.getText().toString());
-        mDatabase.child("Config").child("delay").setValue(finalValue);
+        int delayValue = Integer.parseInt(editText.getText().toString());
+        refDelay.setValue(delayValue);
     }
 
 
@@ -60,17 +85,6 @@ public class MainActivity extends AppCompatActivity {
                     tv.setText(getString(R.string.rpi_offline).toString());
                     tv.setTextColor(Color.RED);
                 }
-
-               /* if (Integer.parseInt(ds.getValue().toString()) == 0) {
-                    tv.setText(getString(R.string.rpi_offline).toString());
-                    tv.setTextColor(Color.RED);
-                } else if (Integer.parseInt(ds.getValue().toString()) == 1) {
-                    tv.setText(getString(R.string.rpi_online).toString());
-                    tv.setTextColor(Color.GREEN);
-                } else {
-                    tv.setText("Failed!!!");
-                    tv.setTextColor(Color.RED);*/
-
                 break;
             case "delay":
                 ed = findViewById(R.id.editText);
@@ -100,9 +114,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void handleUI() {
-        mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        mDatabase.addChildEventListener(new ChildEventListener() {
+        if (mDatabase == null) {
+            mDatabase = FirebaseDatabase.getInstance().getReference();
+        }
+        if (refDelay == null) {
+            refDelay = mDatabase.child("Config").child("delay");
+        }
+
+        childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
@@ -129,7 +149,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
-        });
+        };
+        mDatabase.addChildEventListener(childEventListener);
+
 
         CompoundButton.OnCheckedChangeListener multiListener = new CompoundButton.OnCheckedChangeListener() {
 
