@@ -5,11 +5,13 @@
     <string name="bcm4_off">BCM4 is Off</string>
     <string name="bcm6_on">BCM6 is On</string>
     <string name="bcm6_off">BCM6 is Off</string>
-    <string name="rpi_online">Raspberry Pi is Online:</string>
-    <string name="rpi_offline">Raspberry Pi is Offline:</string>
+    <string name="rpi_online">Raspberry Pi is Online</string>
+    <string name="rpi_offline">Raspberry Pi is Offline</string>
 
     <string name="overview">Overview</string>
     <string name="delay_label">Delay:</string>
+    <string name="malf_label">Malfunction Offset:</string>
+    <string name="malf_info">Warning! Watering system malfunction is detected, please inspect!</string>
     <string name="BCM4_label">BCM4:</string>
     <string name="BCM6_label">BCM6:</string>
     <string name="BCM17_label">BCM17:</string>

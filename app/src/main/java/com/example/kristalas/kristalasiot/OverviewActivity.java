@@ -14,15 +14,49 @@ import com.google.firebase.database.FirebaseDatabase;
 public class OverviewActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private TextView textView;
+    ChildEventListener childEventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overview);
+        initFirebase();
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.addChildEventListener(new ChildEventListener() {
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (childEventListener != null) {
+            mDatabase.removeEventListener(childEventListener);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        handleUI();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mDatabase != null) {
+            mDatabase = null;
+        }
+    }
+
+    private void initFirebase() {
+        if (mDatabase == null) {
+            mDatabase = FirebaseDatabase.getInstance().getReference();
+        }
+    }
+
+    private void handleUI() {
+        childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
@@ -49,13 +83,18 @@ public class OverviewActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
-        });
+        };
+        mDatabase.addChildEventListener(childEventListener);
     }
 
     private void updateUI(DataSnapshot ds) {
         switch (ds.getKey()) {
             case "delay":
                 textView = findViewById(R.id.textView3);
+                textView.setText(ds.getValue().toString());
+                break;
+            case "malfunc_offset":
+                textView = findViewById(R.id.textView26);
                 textView.setText(ds.getValue().toString());
                 break;
             case "BCM4":

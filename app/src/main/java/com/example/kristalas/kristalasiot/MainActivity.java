@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -20,30 +22,50 @@ import com.google.firebase.database.FirebaseDatabase;
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private DatabaseReference mDatabase;
-    private DatabaseReference refDelay;
+    private DatabaseReference refGPIO;
+    private DatabaseReference refConfig;
     ChildEventListener childEventListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initFirebase();
+        handleSwitches();
+    }
 
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.overview:
+                startActivity(new Intent(this, OverviewActivity.class));
+                return true;
+            case R.id.settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 
     @Override
     protected void onStart() {
         super.onStart();
-
-        //   Log.i(TAG, "On Start .....");
     }
+
     @Override
     protected void onPause() {
         super.onPause();
         if (childEventListener != null) {
             mDatabase.removeEventListener(childEventListener);
         }
-
     }
 
     @Override
@@ -52,28 +74,24 @@ public class MainActivity extends AppCompatActivity {
         handleUI();
     }
 
-
-    public void setDelay(View view) {
-        EditText editText = findViewById(R.id.editText);
-        int delayValue = Integer.parseInt(editText.getText().toString());
-        refDelay.setValue(delayValue);
-    }
-
-
-    public void showOverview(View view) {
-        Intent intent = new Intent(this, OverviewActivity.class);
-        startActivity(intent);
-    }
-
-    public void showGardenSystem(View view) {
-        Intent intent = new Intent(this, GardenActivity.class);
-        startActivity(intent);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mDatabase != null) {
+            mDatabase = null;
+        }
+        if (refGPIO != null) {
+            refGPIO = null;
+        }
+        if (refConfig != null) {
+            refConfig = null;
+        }
     }
 
     private void updateUI(DataSnapshot ds) {
-        final EditText ed;
         TextView tv;
         Switch sw;
+        ToggleButton tb;
 
         switch (ds.getKey()) {
             case "online":
@@ -86,27 +104,67 @@ public class MainActivity extends AppCompatActivity {
                     tv.setTextColor(Color.RED);
                 }
                 break;
-            case "delay":
-                ed = findViewById(R.id.editText);
-                ed.setHint(getString(R.string.delay_label).toString() + ds.getValue().toString());
-                break;
-            case "BCM4":
-                sw = findViewById(R.id.switch1);
+            case "malfunction":
+                tv = findViewById(R.id.textView21);
                 if (getState(ds.getValue())) {
-                    sw.setText(getString(R.string.bcm4_on).toString());
+                    tv.setText(getString(R.string.malf_info).toString());
                 } else {
-                    sw.setText(getString(R.string.bcm4_off).toString());
+                    tv.setText("");
                 }
+                break;
+            case "auto":
+                tb = findViewById(R.id.toggleButton);
+                tb.setChecked(getState(ds.getValue()));
+                if (Integer.parseInt(ds.getValue().toString()) == 1){
+
+                    refGPIO.child("BCM23").setValue(0);
+                    refGPIO.child("BCM24").setValue(0);
+                    refGPIO.child("BCM25").setValue(0);
+                }
+                sw = findViewById(R.id.switch3);
+                sw.setClickable(!getState(ds.getValue()));
+                sw = findViewById(R.id.switch4);
+                sw.setClickable(!getState(ds.getValue()));
+                sw = findViewById(R.id.switch5);
+                sw.setClickable(!getState(ds.getValue()));
+                //Log.d(TAG, "Error on PeripheralIO API" + " " + ds.getValue());
+
+                break;
+            case "BCM24":
+                sw = findViewById(R.id.switch3);
                 sw.setChecked(getState(ds.getValue()));
                 break;
-            case "BCM6":
-                sw = findViewById(R.id.switch2);
-                if (getState(ds.getValue())) {
-                    sw.setText(getString(R.string.bcm6_on).toString());
-                } else {
-                    sw.setText(getString(R.string.bcm6_off).toString());
-                }
+            case "BCM25":
+                sw = findViewById(R.id.switch4);
                 sw.setChecked(getState(ds.getValue()));
+                break;
+            case "BCM23":
+                sw = findViewById(R.id.switch5);
+                sw.setChecked(getState(ds.getValue()));
+                break;
+            case "BCM17":
+                tv = findViewById(R.id.textView10);
+                if (getState(ds.getValue())) {
+                    tv.setText(getString(R.string.wet).toString());
+                } else {
+                    tv.setText(getString(R.string.dry).toString());
+                }
+                break;
+            case "BCM27":
+                tv = findViewById(R.id.textView12);
+                if (getState(ds.getValue())) {
+                    tv.setText(getString(R.string.wet).toString());
+                } else {
+                    tv.setText(getString(R.string.dry).toString());
+                }
+                break;
+            case "BCM22":
+                tv = findViewById(R.id.textView14);
+                if (getState(ds.getValue())) {
+                    tv.setText(getString(R.string.wet).toString());
+                } else {
+                    tv.setText(getString(R.string.dry).toString());
+                }
                 break;
         }
 
@@ -114,14 +172,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void handleUI() {
-
-        if (mDatabase == null) {
-            mDatabase = FirebaseDatabase.getInstance().getReference();
-        }
-        if (refDelay == null) {
-            refDelay = mDatabase.child("Config").child("delay");
-        }
-
         childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
@@ -152,32 +202,6 @@ public class MainActivity extends AppCompatActivity {
         };
         mDatabase.addChildEventListener(childEventListener);
 
-
-        CompoundButton.OnCheckedChangeListener multiListener = new CompoundButton.OnCheckedChangeListener() {
-
-            public void onCheckedChanged(CompoundButton v, boolean isChecked) {
-                switch (v.getId()) {
-                    case R.id.switch1:
-                        if (isChecked) {
-                            mDatabase.child("GPIO").child("BCM4").setValue(1);
-
-                        } else {
-                            mDatabase.child("GPIO").child("BCM4").setValue(0);
-                        }
-                        break;
-                    case R.id.switch2:
-                        if (isChecked) {
-                            mDatabase.child("GPIO").child("BCM6").setValue(1);
-
-                        } else {
-                            mDatabase.child("GPIO").child("BCM6").setValue(0);
-                        }
-                        break;
-                }
-            }
-        };
-        ((Switch) findViewById(R.id.switch1)).setOnCheckedChangeListener(multiListener);
-        ((Switch) findViewById(R.id.switch2)).setOnCheckedChangeListener(multiListener);
     }
 
     private boolean getState(Object gpioState) {
@@ -190,5 +214,66 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void initFirebase() {
+        if (mDatabase == null) {
+            mDatabase = FirebaseDatabase.getInstance().getReference();
+        }
+        if (refGPIO == null) {
+            refGPIO = mDatabase.child("GPIO");
+        }
+        if (refConfig == null) {
+            refConfig = mDatabase.child("Config");
+        }
+    }
 
+    private void handleSwitches() {
+        CompoundButton.OnCheckedChangeListener multiListener = new CompoundButton.OnCheckedChangeListener() {
+
+            public void onCheckedChanged(CompoundButton v, boolean isChecked) {
+                switch (v.getId()) {
+                    case R.id.switch3:
+                        if (isChecked) {
+                            refGPIO.child("BCM24").setValue(1);
+                        } else {
+
+                            refGPIO.child("BCM24").setValue(0);
+                        }
+                        break;
+                    case R.id.switch4:
+                        if (isChecked) {
+                            refGPIO.child("BCM25").setValue(1);
+
+                        } else {
+                            refGPIO.child("BCM25").setValue(0);
+                        }
+                        break;
+                    case R.id.switch5:
+                        if (isChecked) {
+                            refGPIO.child("BCM23").setValue(1);
+
+                        } else {
+                            refGPIO.child("BCM23").setValue(0);
+                        }
+                        break;
+                }
+            }
+        };
+        ((Switch) findViewById(R.id.switch3)).setOnCheckedChangeListener(multiListener);
+        ((Switch) findViewById(R.id.switch4)).setOnCheckedChangeListener(multiListener);
+        ((Switch) findViewById(R.id.switch5)).setOnCheckedChangeListener(multiListener);
+
+        ToggleButton toggle = (ToggleButton) findViewById(R.id.toggleButton);
+        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // AUTO mode is ON
+                    refConfig.child("auto").setValue(1);
+
+                } else {
+                    // Manual mode is ON
+                    refConfig.child("auto").setValue(0);
+                }
+            }
+        });
+    }
 }
