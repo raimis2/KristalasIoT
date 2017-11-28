@@ -11,7 +11,7 @@
     <string name="overview">Overview</string>
     <string name="delay_label">Delay:</string>
     <string name="malf_label">Malfunction Offset:</string>
-    <string name="malf_info">Warning! Watering system malfunction is detected, please inspect!</string>
+    <string name="malf_info">Warning! Watering system malfunction detected!</string>
     <string name="BCM4_label">BCM4:</string>
     <string name="BCM6_label">BCM6:</string>
     <string name="BCM17_label">BCM17:</string>
