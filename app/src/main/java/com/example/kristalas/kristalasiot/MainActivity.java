@@ -131,7 +131,18 @@ public class MainActivity extends AppCompatActivity {
                 sw = findViewById(R.id.switch5);
                 sw.setClickable(!getState(ds.getValue()));
                 //Log.d(TAG, "Error on PeripheralIO API" + " " + ds.getValue());
-
+                break;
+            case "H1":
+                tv = findViewById(R.id.textView10);
+                tv.setText(ds.getValue().toString());
+                break;
+            case "H2":
+                tv = findViewById(R.id.textView12);
+                tv.setText(ds.getValue().toString());
+                break;
+            case "H3":
+                tv = findViewById(R.id.textView14);
+                tv.setText(ds.getValue().toString());
                 break;
             case "BCM24":
                 sw = findViewById(R.id.switch3);
@@ -146,28 +157,28 @@ public class MainActivity extends AppCompatActivity {
                 sw.setChecked(getState(ds.getValue()));
                 break;
             case "BCM17":
-                tv = findViewById(R.id.textView10);
+               /* tv = findViewById(R.id.textView10);
                 if (getState(ds.getValue())) {
                     tv.setText(getString(R.string.wet).toString());
                 } else {
                     tv.setText(getString(R.string.dry).toString());
-                }
+                }*/
                 break;
             case "BCM27":
-                tv = findViewById(R.id.textView12);
+                /*tv = findViewById(R.id.textView12);
                 if (getState(ds.getValue())) {
                     tv.setText(getString(R.string.wet).toString());
                 } else {
                     tv.setText(getString(R.string.dry).toString());
-                }
+                }*/
                 break;
             case "BCM22":
-                tv = findViewById(R.id.textView14);
+               /*tv = findViewById(R.id.textView14);
                 if (getState(ds.getValue())) {
                     tv.setText(getString(R.string.wet).toString());
                 } else {
                     tv.setText(getString(R.string.dry).toString());
-                }
+                }*/
                 break;
         }
 
@@ -279,9 +290,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        //SeekBar sk=(SeekBar) findViewById(R.id.seekBar1);
-        //SeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
     }
 }
