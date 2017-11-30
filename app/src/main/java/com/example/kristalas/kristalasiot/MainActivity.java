@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
+import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.google.firebase.database.ChildEventListener;
@@ -115,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
             case "auto":
                 tb = findViewById(R.id.toggleButton);
                 tb.setChecked(getState(ds.getValue()));
-                if (Integer.parseInt(ds.getValue().toString()) == 1){
+                if (Integer.parseInt(ds.getValue().toString()) == 1) {
 
                     refGPIO.child("BCM23").setValue(0);
                     refGPIO.child("BCM24").setValue(0);
@@ -227,6 +230,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void handleSwitches() {
+
         CompoundButton.OnCheckedChangeListener multiListener = new CompoundButton.OnCheckedChangeListener() {
 
             public void onCheckedChanged(CompoundButton v, boolean isChecked) {
@@ -275,5 +279,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //SeekBar sk=(SeekBar) findViewById(R.id.seekBar1);
+        //SeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
     }
 }

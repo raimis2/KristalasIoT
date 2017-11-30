@@ -36,12 +36,17 @@
     <string name="plant1a">Plant 1 has enough Moisture</string>
     <string name="plant1b">Watering plant 1</string>
     <string name="plant1c">Need to water the plant 1</string>
+    <string name="plant1d">Plant 1 desired humidity</string>
+
     <string name="plant2a">Plant 2 has enough Moisture</string>
     <string name="plant2b">Watering plant 2</string>
     <string name="plant2c">Need to water the plant 3</string>
+    <string name="plant2d">Plant 2 desired humidity</string>
+
     <string name="plant3a">Plant 3 has enough Moisture</string>
     <string name="plant3b">Watering plant 3</string>
     <string name="plant3c">Need to water the plant 3</string>
+    <string name="plant3d">Plant 3 desired humidity</string>
 
 
 </resources>

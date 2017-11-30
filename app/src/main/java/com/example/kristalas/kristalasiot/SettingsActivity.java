@@ -2,9 +2,11 @@ package com.example.kristalas.kristalasiot;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -16,7 +18,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SettingsActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
+    private static final String TAG = SettingsActivity.class.getSimpleName();
     private DatabaseReference refDelay;
+    private DatabaseReference refConfig;
     private DatabaseReference refMalfOff;
     ChildEventListener childEventListener;
     @Override
@@ -58,23 +62,30 @@ public class SettingsActivity extends AppCompatActivity {
         if (refMalfOff != null) {
             refMalfOff = null;
         }
+        if (refConfig != null) {
+            refConfig = null;
+        }
+
     }
     public void setDelay(View view) {
         EditText editText = findViewById(R.id.editText);
         int delayValue = Integer.parseInt(editText.getText().toString());
+        editText.setText("");
         refDelay.setValue(delayValue);
     }
     public void setMalfOffset(View view) {
         EditText editText = findViewById(R.id.editText2);
         int delayValue = Integer.parseInt(editText.getText().toString());
+        editText.setText("");
         refMalfOff.setValue(delayValue);
     }
 
 
     private void updateUI(DataSnapshot ds) {
         final EditText ed;
-        TextView tv;
+        //TextView tv;
         Switch sw;
+        SeekBar sb;
 
         switch (ds.getKey()) {
             case "delay":
@@ -85,6 +96,25 @@ public class SettingsActivity extends AppCompatActivity {
                 ed = findViewById(R.id.editText2);
                 ed.setHint(getString(R.string.malf_label).toString() + ds.getValue().toString());
                 break;
+            case "h1_desired":
+                sb = findViewById(R.id.seekBar1);
+                sb.setProgress(Integer.parseInt(ds.getValue().toString()));
+              //  ed = findViewById(R.id.editText);
+               // ed.setHint(getString(R.string.delay_label).toString() + ds.getValue().toString());
+                break;
+            case "h2_desired":
+                sb = findViewById(R.id.seekBar2);
+                sb.setProgress(Integer.parseInt(ds.getValue().toString()));
+               // ed = findViewById(R.id.editText);
+              //  ed.setHint(getString(R.string.delay_label).toString() + ds.getValue().toString());
+                break;
+            case "h3_desired":
+                sb = findViewById(R.id.seekBar3);
+                sb.setProgress(Integer.parseInt(ds.getValue().toString()));
+             //   ed = findViewById(R.id.editText);
+             //   ed.setHint(getString(R.string.delay_label).toString() + ds.getValue().toString());
+                break;
+
             case "BCM4":
                 sw = findViewById(R.id.switch1);
                 if (getState(ds.getValue())) {
@@ -161,6 +191,10 @@ public class SettingsActivity extends AppCompatActivity {
         if (refMalfOff == null) {
             refMalfOff = mDatabase.child("Config").child("malfunc_offset");
         }
+        if (refConfig == null) {
+            refConfig = mDatabase.child("Config");
+        }
+
     }
 
     private void handleSwitches() {
@@ -189,6 +223,48 @@ public class SettingsActivity extends AppCompatActivity {
         };
         ((Switch) findViewById(R.id.switch1)).setOnCheckedChangeListener(multiListener);
         ((Switch) findViewById(R.id.switch2)).setOnCheckedChangeListener(multiListener);
+
+
+        SeekBar sb1 = (SeekBar) findViewById(R.id.seekBar1);
+        SeekBar sb2 = (SeekBar) findViewById(R.id.seekBar2);
+        SeekBar sb3 = (SeekBar) findViewById(R.id.seekBar3);
+
+
+        //childEventListener = new ChildEventListener() {
+        SeekBar.OnSeekBarChangeListener seekBarListener = new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+                switch (seekBar.getId()) {
+                    case R.id.seekBar1:
+                       // textHours.setText("" + progress + "Heure(s)");
+                        refConfig.child("h1_desired").setValue(seekBar.getProgress());
+                        break;
+
+                    case R.id.seekBar2:
+                        refConfig.child("h2_desired").setValue(seekBar.getProgress());
+                        break;
+                    case R.id.seekBar3:
+                        refConfig.child("h3_desired").setValue(seekBar.getProgress());
+                        break;
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+                // TODO Auto-generated method stub
+
+            }
+        };
+        sb1.setOnSeekBarChangeListener(seekBarListener);
+        sb2.setOnSeekBarChangeListener(seekBarListener);
+        sb3.setOnSeekBarChangeListener(seekBarListener);
+
 
     }
 
