@@ -21,32 +21,17 @@
     <string name="BCM25_label">BCM25:</string>
     <string name="BCM27_label">BCM27:</string>
 
-    <string name="garden">Garden system</string>
     <string name="gardentitle">Manual settings</string>
     <string name="ws1">Water switch 1</string>
     <string name="ws2">Water switch 2</string>
     <string name="wp">Water pump</string>
-    <string name="h1">Input from humidity sensor 1:</string>
-    <string name="h2">Input from humidity sensor 2:</string>
-    <string name="h3">Input from humidity sensor 3:</string>
-    <string name="wet">Wet</string>
-    <string name="dry">Dry</string>
+    <string name="h1">Plant 1 humidity:</string>
+    <string name="h2">Plant 2 humidity:</string>
+    <string name="h3">Plant 3 humidity:</string>
     <string name="auto_on">Auto mode</string>
     <string name="auto_off">Manual mode</string>
-    <string name="plant1a">Plant 1 has enough Moisture</string>
-    <string name="plant1b">Watering plant 1</string>
-    <string name="plant1c">Need to water the plant 1</string>
     <string name="plant1d">Plant 1 desired humidity</string>
-
-    <string name="plant2a">Plant 2 has enough Moisture</string>
-    <string name="plant2b">Watering plant 2</string>
-    <string name="plant2c">Need to water the plant 3</string>
     <string name="plant2d">Plant 2 desired humidity</string>
-
-    <string name="plant3a">Plant 3 has enough Moisture</string>
-    <string name="plant3b">Watering plant 3</string>
-    <string name="plant3c">Need to water the plant 3</string>
     <string name="plant3d">Plant 3 desired humidity</string>
-
 
 </resources>

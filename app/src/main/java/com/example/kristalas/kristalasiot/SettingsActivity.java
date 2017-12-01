@@ -23,6 +23,7 @@ public class SettingsActivity extends AppCompatActivity {
     private DatabaseReference refConfig;
     private DatabaseReference refMalfOff;
     ChildEventListener childEventListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,12 +68,14 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
     }
+
     public void setDelay(View view) {
         EditText editText = findViewById(R.id.editText);
         int delayValue = Integer.parseInt(editText.getText().toString());
         editText.setText("");
         refDelay.setValue(delayValue);
     }
+
     public void setMalfOffset(View view) {
         EditText editText = findViewById(R.id.editText2);
         int delayValue = Integer.parseInt(editText.getText().toString());
@@ -99,20 +102,20 @@ public class SettingsActivity extends AppCompatActivity {
             case "h1_desired":
                 sb = findViewById(R.id.seekBar1);
                 sb.setProgress(Integer.parseInt(ds.getValue().toString()));
-              //  ed = findViewById(R.id.editText);
-               // ed.setHint(getString(R.string.delay_label).toString() + ds.getValue().toString());
+                //  ed = findViewById(R.id.editText);
+                // ed.setHint(getString(R.string.delay_label).toString() + ds.getValue().toString());
                 break;
             case "h2_desired":
                 sb = findViewById(R.id.seekBar2);
                 sb.setProgress(Integer.parseInt(ds.getValue().toString()));
-               // ed = findViewById(R.id.editText);
-              //  ed.setHint(getString(R.string.delay_label).toString() + ds.getValue().toString());
+                // ed = findViewById(R.id.editText);
+                //  ed.setHint(getString(R.string.delay_label).toString() + ds.getValue().toString());
                 break;
             case "h3_desired":
                 sb = findViewById(R.id.seekBar3);
                 sb.setProgress(Integer.parseInt(ds.getValue().toString()));
-             //   ed = findViewById(R.id.editText);
-             //   ed.setHint(getString(R.string.delay_label).toString() + ds.getValue().toString());
+                //   ed = findViewById(R.id.editText);
+                //   ed.setHint(getString(R.string.delay_label).toString() + ds.getValue().toString());
                 break;
 
             case "BCM4":
@@ -237,7 +240,7 @@ public class SettingsActivity extends AppCompatActivity {
                 // TODO Auto-generated method stub
                 switch (seekBar.getId()) {
                     case R.id.seekBar1:
-                       // textHours.setText("" + progress + "Heure(s)");
+                        // textHours.setText("" + progress + "Heure(s)");
                         refConfig.child("h1_desired").setValue(seekBar.getProgress());
                         break;
 
@@ -256,8 +259,26 @@ public class SettingsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 // TODO Auto-generated method stub
+                TextView textView;
+                switch (seekBar.getId()) {
+                    case R.id.seekBar1:
+                        textView = findViewById(R.id.textView28);
+                        textView.setText(String.valueOf(progress));
+                        textView.setTextColor(getTextColor(progress));
+                        break;
+                    case R.id.seekBar2:
+                        textView = findViewById(R.id.textView29);
+                        textView.setText(String.valueOf(progress));
+                        textView.setTextColor(getTextColor(progress));
+                        break;
+                    case R.id.seekBar3:
+                        textView = findViewById(R.id.textView30);
+                        textView.setText(String.valueOf(progress));
+                        textView.setTextColor(getTextColor(progress));
+                        break;
+                }
 
             }
         };
@@ -266,6 +287,16 @@ public class SettingsActivity extends AppCompatActivity {
         sb3.setOnSeekBarChangeListener(seekBarListener);
 
 
+    }
+
+    public int getTextColor(int value) {
+        if (Integer.parseInt(String.valueOf(value)) <= 33) {
+            return getResources().getColor(R.color.colorDarkRed);
+        } else if (Integer.parseInt(String.valueOf(value)) <= 66) {
+            return getResources().getColor(R.color.colorOrange);
+        } else {
+            return getResources().getColor(R.color.colorDarkGreen);
+        }
     }
 
 }
