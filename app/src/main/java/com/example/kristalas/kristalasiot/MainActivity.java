@@ -132,6 +132,10 @@ public class MainActivity extends AppCompatActivity {
                 sw.setClickable(!getState(ds.getValue()));
                 //Log.d(TAG, "Error on PeripheralIO API" + " " + ds.getValue());
                 break;
+            case "timestamp":
+                tv = findViewById(R.id.textView32);
+                tv.setText(ds.getValue().toString());
+                break;
             case "H1":
                 tv = findViewById(R.id.textView10);
                 tv.setText(ds.getValue().toString());
@@ -146,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
                 tv = findViewById(R.id.textView14);
                 tv.setText(ds.getValue().toString());
                 tv.setTextColor(getTextColor(Integer.parseInt(ds.getValue().toString())));
-                ;
                 break;
             case "BCM24":
                 sw = findViewById(R.id.switch3);

@@ -25,6 +25,7 @@
     <string name="ws1">Water switch 1</string>
     <string name="ws2">Water switch 2</string>
     <string name="wp">Water pump</string>
+    <string name="timestamp">Last checked: </string>
     <string name="h1">Plant 1 humidity:</string>
     <string name="h2">Plant 2 humidity:</string>
     <string name="h3">Plant 3 humidity:</string>
