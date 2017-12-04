@@ -21,6 +21,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -133,8 +139,20 @@ public class MainActivity extends AppCompatActivity {
                 //Log.d(TAG, "Error on PeripheralIO API" + " " + ds.getValue());
                 break;
             case "timestamp":
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date d = null;
+                try {
+                    d = df.parse(ds.getValue().toString());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(d);
+                cal.add(Calendar.HOUR, 2);
+                String newTime = df.format(cal.getTime());
+
                 tv = findViewById(R.id.textView32);
-                tv.setText(ds.getValue().toString());
+                tv.setText(newTime);
                 break;
             case "H1":
                 tv = findViewById(R.id.textView10);
