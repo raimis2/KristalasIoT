@@ -139,20 +139,8 @@ public class MainActivity extends AppCompatActivity {
                 //Log.d(TAG, "Error on PeripheralIO API" + " " + ds.getValue());
                 break;
             case "timestamp":
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                Date d = null;
-                try {
-                    d = df.parse(ds.getValue().toString());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(d);
-                cal.add(Calendar.HOUR, 2);
-                String newTime = df.format(cal.getTime());
-
                 tv = findViewById(R.id.textView32);
-                tv.setText(newTime);
+                tv.setText(ds.getValue().toString());
                 break;
             case "H1":
                 tv = findViewById(R.id.textView10);
