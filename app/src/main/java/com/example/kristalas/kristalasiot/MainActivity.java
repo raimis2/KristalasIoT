@@ -157,6 +157,11 @@ public class MainActivity extends AppCompatActivity {
                 tv.setText(ds.getValue().toString());
                 tv.setTextColor(getTextColor(Integer.parseInt(ds.getValue().toString())));
                 break;
+            case "H4":
+                tv = findViewById(R.id.textView34);
+                tv.setText(ds.getValue().toString());
+                tv.setTextColor(getTextColor(Integer.parseInt(ds.getValue().toString())));
+                break;
             case "BCM24":
                 sw = findViewById(R.id.switch3);
                 sw.setChecked(getState(ds.getValue()));
