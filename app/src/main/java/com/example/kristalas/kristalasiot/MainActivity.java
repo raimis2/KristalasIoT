@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private DatabaseReference refGPIO;
     private DatabaseReference refConfig;
+    private DatabaseReference refSensor1;
     ChildEventListener childEventListener;
 
     @Override
@@ -101,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         TextView tv;
         Switch sw;
         ToggleButton tb;
-
+      //  Log.d(TAG, "updating Ui" + ds.getKey());
         switch (ds.getKey()) {
             case "online":
                 tv = findViewById(R.id.textView);
@@ -142,10 +143,16 @@ public class MainActivity extends AppCompatActivity {
                 tv = findViewById(R.id.textView32);
                 tv.setText(ds.getValue().toString());
                 break;
-            case "H1":
+          /*  case "H1":
                 tv = findViewById(R.id.textView10);
                 tv.setText(ds.getValue().toString());
                 tv.setTextColor(getTextColor(Integer.parseInt(ds.getValue().toString())));
+                break;*/
+            case "moisture":
+             //   Log.d(TAG, "humidity node" + " " + ds.child("sensor_1").child("humidity").getValue());
+                tv = findViewById(R.id.textView10);
+                tv.setText(ds.child("sensor_1").child("humidity").getValue().toString());
+                tv.setTextColor(getTextColor(Integer.parseInt(ds.child("sensor_1").child("humidity").getValue().toString())));
                 break;
             case "H2":
                 tv = findViewById(R.id.textView12);
@@ -243,6 +250,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         mDatabase.addChildEventListener(childEventListener);
+        refSensor1.addChildEventListener(childEventListener);
 
     }
 
@@ -265,6 +273,9 @@ public class MainActivity extends AppCompatActivity {
         }
         if (refConfig == null) {
             refConfig = mDatabase.child("Config");
+        }
+        if (refSensor1 == null) {
+            refSensor1 = mDatabase.child("sensors").child("moisture").child("sensor_1");
         }
     }
 
